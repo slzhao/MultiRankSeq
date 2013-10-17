@@ -10,12 +10,14 @@ RNAseq technology is rapidly replacing microarray technology as the tool of choi
 
 <a name="download"/>
 # Download #
-You can download the zip file of MultiRankSeq package from [windows version](https://github.com/slzhao/MultiRankSeq/blob/master/MultiRankSeq_1.0.0.zip) or [linux and mac version](https://github.com/slzhao/MultiRankSeq/blob/master/MultiRankSeq_1.0.0.tar.gz). And then you can use the "Install packages from local zip file" menu in R to install it.
+You can download the zip file of MultiRankSeq package from [windows version](https://github.com/slzhao/MultiRankSeq/releases/download/Release/MultiRankSeq_1.0.0.zip) or [linux and mac version](https://github.com/slzhao/MultiRankSeq/releases/download/Release/MultiRankSeq_1.0.0.tar.gz). And then you can use the "Install packages from local zip file" menu in R to install it.
 
-Or you can directly download the source codes of MultiRankSeq package from [github](https://github.com/slzhao/MultiRankSeq) by the following commands (If git has already been installed in your computer).
+Or you can directly download the source codes of MultiRankSeq package from [github](https://github.com/slzhao/MultiRankSeq) by the following commands (If git has already been installed in your computer). And then you need to built the source codes into a package.
 
-	#The source codes of QC3 software will be downloaded to your current directory
+	#The source codes of MultiRankSeq software will be downloaded to your current directory
 	git clone https://github.com/slzhao/MultiRankSeq.git
+	#Built the source codes into a package
+	R CMD build MultiRankSeq
 
 <a name="example"/>
 # Example #
