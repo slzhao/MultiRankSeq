@@ -88,7 +88,8 @@ findDiff<-function(rawCounts,group=c(0,0,0,1,1,1)) {
 ##' data(exampleCountsDiff)
 ##' diffReport(output="MultiRankSeq.html",diffResult=exampleCountsDiff,rawCounts=exampleCounts)
 diffReport<-function(input=system.file("extdata", "report.Rhtml", package = "MultiRankSeq"),output,diffResult,rawCounts,group=c(0,0,0,1,1,1)) {
-#	require(knitr)
+	require(knitr)
+	require(VennDiagram)
 	outputWd<-dirname(output)
 	if (outputWd != ".") { #file name and path
 		oldWd<-getwd()
@@ -96,6 +97,7 @@ diffReport<-function(input=system.file("extdata", "report.Rhtml", package = "Mul
 	} else { #only file name
 		output<-paste(getwd(),output,sep="/")
 	}
+	write.csv(diffResult,paste(output,".diff",".csv",sep=""))
 	knit(input=input,output=output,quiet=T)
 	print (paste("The MultiRankSeq report was generated in ",output,sep=""))
 	if (outputWd != ".") {
