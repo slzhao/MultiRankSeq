@@ -2,9 +2,8 @@
 \alias{MultiRankSeqReport}
 \title{MultiRankSeqReport}
 \usage{
-  MultiRankSeqReport(output = "MultiRankSeq.html",
-    rawCounts = exampleCounts, group = c(0, 0, 0, 1, 1, 1),
-    diffResult, ...)
+MultiRankSeqReport(output = "MultiRankSeq.html", rawCounts, group = c(0, 0,
+  0, 1, 1, 1), diffResult, ...)
 }
 \arguments{
   \item{output}{the path and name for report file.}
@@ -24,11 +23,11 @@
   \code{\link{diffReport}} function.}
 }
 \description{
-  A wrapper for function findDiff and diffReport.
+A wrapper for function findDiff and diffReport.
 }
 \details{
-  A function to generate MultiRankSeq report based on
-  counts data.
+A function to generate MultiRankSeq report based on counts
+data.
 }
 \examples{
 #A simple example

@@ -88,8 +88,8 @@ findDiff<-function(rawCounts,group=c(0,0,0,1,1,1)) {
 ##' data(exampleCountsDiff)
 ##' diffReport(output="MultiRankSeq.html",diffResult=exampleCountsDiff,rawCounts=exampleCounts)
 diffReport<-function(input=system.file("extdata", "report.Rhtml", package = "MultiRankSeq"),output,diffResult,rawCounts,group=c(0,0,0,1,1,1)) {
-	require(knitr)
-	require(VennDiagram)
+#	require(knitr)
+#	require(VennDiagram)
 	outputWd<-dirname(output)
 	if (outputWd != ".") { #file name and path
 		oldWd<-getwd()
@@ -655,4 +655,17 @@ heatmap3<-function (x, Rowv = NULL, Colv = if (symm) "Rowv" else NULL,
 	}
 	invisible(list(rowInd = rowInd, colInd = colInd, Rowv = if (keep.dendro && 
 							doRdend) ddr, Colv = if (keep.dendro && doCdend) ddc))
+}
+
+history1<-function (max.show = 25, reverse = FALSE, pattern, ...) 
+{
+	file1 <- tempfile("Rrawhist")
+	savehistory(file1)
+	rawhist <- readLines(file1)
+	unlink(file1)
+	if (!missing(pattern)) 
+		rawhist <- unique(grep(pattern, rawhist, value = TRUE, 
+						...))
+	inds<-length(rawhist)
+	return(rawhist[inds])
 }

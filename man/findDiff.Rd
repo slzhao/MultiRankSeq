@@ -2,7 +2,7 @@
 \alias{findDiff}
 \title{findDiff}
 \usage{
-  findDiff(rawCounts, group = c(0, 0, 0, 1, 1, 1))
+findDiff(rawCounts, group = c(0, 0, 0, 1, 1, 1))
 }
 \arguments{
   \item{rawCounts}{the count data used in analysis, which
@@ -13,12 +13,12 @@
   samples labeled as 0.}
 }
 \value{
-  A matrix with log2 fold change, p value, adjusted p
-  value, and rank of DESeq, edgeR, and baySeq analysis.
+A matrix with log2 fold change, p value, adjusted p value,
+and rank of DESeq, edgeR, and baySeq analysis.
 }
 \description{
-  The function will perform DESeq, edgeR, and baySeq
-  analysis.
+The function will perform DESeq, edgeR, and baySeq
+analysis.
 }
 \examples{
 set.seed(123456789) #generate data

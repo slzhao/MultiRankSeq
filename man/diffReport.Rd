@@ -2,9 +2,8 @@
 \alias{diffReport}
 \title{diffReport}
 \usage{
-  diffReport(input = system.file("extdata", "report.Rhtml", package = "MultiRankSeq"),
-    output, diffResult, rawCounts,
-    group = c(0, 0, 0, 1, 1, 1))
+diffReport(input = system.file("extdata", "report.Rhtml", package =
+  "MultiRankSeq"), output, diffResult, rawCounts, group = c(0, 0, 0, 1, 1, 1))
 }
 \arguments{
   \item{input}{The templet file. You don't need to specify
@@ -24,8 +23,8 @@
   samples labeled as 0.}
 }
 \description{
-  The function will generate a report based on the result
-  of DESeq, edgeR, and baySeq analysis.
+The function will generate a report based on the result of
+DESeq, edgeR, and baySeq analysis.
 }
 \examples{
 data(exampleCounts)

@@ -35,8 +35,8 @@ MultiRankSeq package requires some other R packages, including RColorBrewer, Ven
 
 In Windows system, you can use the "Install packages from local zip file" menu in R to install MultiRankSeq. In Linux system, you can enter R and use following R codes to install MultiRankSeq.
 	
-	#Install MultiRankSeq in linux system, assume MultiRankSeq_1.0.0.tar.gz file was in current directory
-	install.packages("MultiRankSeq_1.0.0.tar.gz")
+	#Install MultiRankSeq in linux system, assume MultiRankSeq_1.1.1.tar.gz file was in current directory
+	install.packages("MultiRankSeq_1.1.1.tar.gz")
 
 <a name="example"/>
 # Example #
