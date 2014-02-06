@@ -46,20 +46,35 @@ end.rcode-->
 </div>
 <div><h2 id="M150">Distribution</h2>
 <p>Heatmap:</p>
+
+<!--begin.rcode heatmapPrepare, cache=F,width='0.45\\linewidth',fig.show='hide',echo=F
+	heatmapResultAll<-heatmap3(log2(rawCounts+1),labRow="",Rowv=NA,keep.dendro=T)
+end.rcode-->
+    
 <!--begin.rcode heatmap, cache=F,width='0.45\\linewidth',fig.show='hold',echo=F
-	groupColor<-rep("brown1",length(group))
+	groupColor<-rep("lightgoldenrod",length(group))
 	groupColor[which(group==1)]<-"steelblue2"
-    temp<-t(scale(t(log2(rawCounts+1))))
-    heatmap3(temp,scale="none",margin=c(8,3),Rowv=NA,ColSideColors=groupColor,main="All genes",balanceColor=T)
-    #top 10%CV genes
-    tempMean<-rowMeans(rawCounts)
+	
+	nTop<-as.integer(nrow(rawCounts)*0.05)  
+	temp<-log2(rawCounts+1)[1:nTop,]
+	temp<-temp[which(apply(temp,1,sd)!=0),]
+	heatmap3(temp,cexCol=1,col=heat.colors(1024),labRow="",margin=c(10,3),Colv=heatmapResultAll$Colv,showRowDendro=F,ColSideLabs="Group",ColSideColors=groupColor,main="All genes")
+	
+    #top 10% SD genes
     tempSd<-apply(rawCounts,1,sd)
-    temp<-tempSd/tempMean
-    tempSd<-tempSd[which(tempMean!=0)]
-    tempMean<-tempMean[which(tempMean!=0)]
-    temp<-rawCounts[rev(order(temp))[1:as.integer(nrow(rawCounts)/10)],]
-    temp<-t(scale(t(log2(temp+1))))
-    heatmap3(temp,scale="none",margin=c(8,3),Rowv=NA,ColSideColors=groupColor,main="Genes with top 5% CV",balanceColor=T)
+    tempTopSD<-rawCounts[rev(order(tempSd))[1:nTop],]
+    tempTopSD<-log2(tempTopSD[which(apply(tempTopSD,1,sd)!=0),]+1)
+    heatmap3(tempTopSD,labRow="",cexCol=1,col=heat.colors(1024),margin=c(10,3),showRowDendro=F,ColSideLabs="Group",ColSideColors=groupColor,main="Genes with top 5% SD")
+    
+    #top 10% CV genes
+    tempMean<-rowMeans(rawCounts)
+    rawCounts1<-rawCounts[which(tempMean>0),]
+    tempMean<-rowMeans(rawCounts1)
+    tempSd<-apply(rawCounts1,1,sd)
+    tempCv<-tempSd/tempMean
+    temp<-rawCounts1[rev(order(tempCv))[1:nTop],]
+    temp<-log2(temp+1)
+    heatmap3(temp,scale="none",margin=c(8,3),col=heat.colors(1024),Rowv=NA,ColSideColors=groupColor,main="Genes with top 5% CV")
     end.rcode-->
 <p>Boxplot and correlations between samples:</p>
 <!--begin.rcode pairs, cache=F,width='0.45\\linewidth',fig.show='hold',echo=F

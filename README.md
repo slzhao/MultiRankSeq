@@ -4,6 +4,7 @@ MultiRankSeq
 * [Download and install](#download)
 * [Example](#example)
 * [Usage](#usage)
+* [Report](#report)
 
 <a name="Introduction"/>
 # Introduction #
@@ -35,8 +36,8 @@ MultiRankSeq package requires some other R packages, including RColorBrewer, Ven
 
 In Windows system, you can use the "Install packages from local zip file" menu in R to install MultiRankSeq. In Linux system, you can enter R and use following R codes to install MultiRankSeq.
 	
-	#Install MultiRankSeq in linux system, assume MultiRankSeq_1.1.1.tar.gz file was in current directory
-	install.packages("MultiRankSeq_1.1.1.tar.gz")
+	#Install MultiRankSeq in Linux system, assume MultiRankSeq_1.1.2.tar.gz file was in current directory
+	install.packages("MultiRankSeq_1.1.2.tar.gz")
 
 <a name="example"/>
 # Example #
@@ -62,3 +63,31 @@ In MultiRankSeq package, MultiRankSeqReport is the primary function to generate 
 	library(MultiRankSeq)
 	#Generate MultiRankSeq report
 	MultiRankSeqReport(output="MultiRankSeqReport.html", rawCounts=countsData, group=group)
+
+<a name="report"/>
+# Report #
+
+The MultiRankSeq report contains four parts. The "Command" part records the command to generate the report. So that the user can reproduce the report easily. The "Overview" part displays the raw counts data and groups for samples. The "Distribution" part displays the hierarchical clustering results for samples, by all genes, genes with top 5% SD and genes with top 5% CV. And it also shows boxplot and correlations between samples. The "Difference" displays the results of differential analysis, including the integrated results from three methods, volcano plot and venn plot.
+
+Here are two example reports based on the TCGA data, which were used in our paper.
+
+[Report for figure 1 and figure 2](http://htmlpreview.github.io/?https://github.com/slzhao/MultiRankSeq/blob/master/example/reportFigure1.html)
+
+	#The TCGA sample names for this report
+	TCGA-A7-A0D9-NT
+	TCGA-BH-A0B3-NT
+	TCGA-BH-A0BJ-NT
+	TCGA-A7-A0D9-TP
+	TCGA-BH-A0B3-TP
+	TCGA-BH-A0BJ-TP
+
+
+[Report for figure 3](http://htmlpreview.github.io/?https://github.com/slzhao/MultiRankSeq/blob/master/example/reportFigure3.html)
+
+	#The TCGA sample names for this report
+	TCGA-BH-A0BM-NT
+	TCGA-BH-A0C0-NT
+	TCGA-BH-A0DK-NT
+	TCGA-BH-A0BM-TP
+	TCGA-BH-A0C0-TP
+	TCGA-BH-A0DK-TP
