@@ -83,8 +83,8 @@ Here are the R codes to generate the report.
 	#Assume you have already installed MultiRankSeq package. You can use the following codes in R to generate the reports.
     library(MultiRankSeq)
     #Load the downloaded data into R, and generate group definition.
-    TcgaFigure1<-read.csv("/scratch/cqs/zhaos/TcgaFigure1.csv",header=T,row.names=1,check.names=F)
-    TcgaFigure3<-read.csv("/scratch/cqs/zhaos/TcgaFigure3.csv",header=T,row.names=1,check.names=F)
+    TcgaFigure1<-read.csv("TcgaFigure1.csv",header=T,row.names=1,check.names=F)
+    TcgaFigure3<-read.csv("TcgaFigure3.csv",header=T,row.names=1,check.names=F)
     group=c(0,0,0,1,1,1)
     #Generate report
     reportF1<-MultiRankSeqReport(output="reportFigure1.html",rawCounts=TcgaFigure1, group=group)
