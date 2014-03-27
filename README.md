@@ -37,11 +37,14 @@ In MultiRankSeq package, MultiRankSeqReport is the primary function to generate 
 	#Assume the counts data was loaded into R as a matrix or data frame. Its name was countsData
 	str(countsData)
 	#Assume the experiment has 4 normal samples and 4 disease samples. We used 0 to represent normal samples and 1 to represent disease samples. MultiRankSeq will compare disease samples versus normal samples.
-	group=c(0,0,0,0,1,1,1,1)
+	group<-c(0,0,0,0,1,1,1,1)
 	#Load MultiRankSeq package
 	library(MultiRankSeq)
 	#Generate MultiRankSeq report
-	MultiRankSeqReport(output="MultiRankSeqReport.html", rawCounts=countsData, group=group)
+	result1<-MultiRankSeqReport(output="MultiRankSeqReport1.html", rawCounts=countsData, group=group)
+	#Assume the experiment has 4 pairs of normal/disease samples.
+	paired<-c(1:4,1:4)
+	result2<-MultiRankSeqReport(output="MultiRankSeqReport2.html",rawCounts=countsData,group=group,paired=paired
 
 <a name="report"/>
 # Report #
@@ -90,7 +93,7 @@ Here are the R codes to generate the report.
     reportF1<-MultiRankSeqReport(output="reportFigure1.html",rawCounts=TcgaFigure1, group=group)
     reportF3<-MultiRankSeqReport(output="reportFigure3.html",rawCounts=TcgaFigure3, group=group)
 
-Here is the enviroment (including the version of packages) of example reports.
+Here is the environment (including the version of packages) of example reports.
 
     sessionInfo()
 

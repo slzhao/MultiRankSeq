@@ -1,3 +1,15 @@
+2014-03-25
+MultiRankSeq 1.2.0: Improved documents; Some bugs were fixed.
+
+2014-03-05
+MultiRankSeq 1.1.5: Paired data was supported; sessionInfo was added into the report.
+
+2014-02-27
+MultiRankSeq 1.1.4: Some bugs were fixed.
+
+2014-02-20
+MultiRankSeq 1.1.3: Improved to DESeq2.
+
 2014-02-05
 MultiRankSeq 1.1.2: Improved based on the reviewer's comments.
 
