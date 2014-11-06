@@ -78,17 +78,17 @@ end.rcode-->
 	groupColor<-rep("lightgoldenrod",length(group))
 	groupColor[which(group==1)]<-"steelblue2"
 	
-	nTop<-as.integer(nrow(rawCountsVsd)*0.05)  
+	nTop<-as.integer(nrow(rawCountsVsd)*percent)  
 	temp<-rawCountsVsd[1:nTop,]
 	temp<-temp[which(apply(temp,1,sd)!=0),]
 	heatmap3(temp,cexCol=1,labRow="",margin=c(12,3),Colv=heatmapResultAll$Colv,showRowDendro=F,ColSideLabs="Group",ColSideColors=groupColor,main="All genes",scale="row",balanceColor=T)
 	
-    #top 5% CV genes
+    #top percent% CV genes
     tempMean<-rowMeans(rawCountsVsd)
     tempSd<-apply(rawCountsVsd,1,sd)
     tempCv<-tempSd/tempMean
     temp<-rawCountsVsd[rev(order(tempCv))[1:nTop],]
-    heatmap3(temp,labRow="",cexCol=1,margin=c(12,3),showRowDendro=F,ColSideLabs="Group",ColSideColors=groupColor,main="Genes with top 5% CV",scale="row",balanceColor=T)
+    heatmap3(temp,labRow="",cexCol=1,margin=c(12,3),showRowDendro=F,ColSideLabs="Group",ColSideColors=groupColor,main=paste0("Genes with top ",round(percent*100),"% CV"),scale="row",balanceColor=T)
     end.rcode-->
 <div><h2 id="M200">Distribution</h2>
 <!--begin.rcode distribution, cache=F,width='0.45\\linewidth',fig.show='hold',echo=F

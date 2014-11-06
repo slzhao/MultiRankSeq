@@ -15,8 +15,9 @@ RNAseq technology is rapidly replacing microarray technology as the tool of choi
 # Download and install #
 You can install MultiRankSeq package in R from [github](https://github.com/slzhao/MultiRankSeq/) by following codes:
 
+	install.packages("devtools") #If you havn't installed devtools package, install it first
 	library(devtools)
-	install_github("MultiRankSeq", user="slzhao")
+	install_github("slzhao/MultiRankSeq")
 
 <a name="example"/>
 # Example #

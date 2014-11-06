@@ -1,3 +1,9 @@
+2014-11-05
+MultiRankSeq 1.2.2: Improved to handle different versions of DESeq2 and baySeq.
+
+2014-07-23
+MultiRankSeq 1.2.1: More parameters can be used; Some bugs were fixed when most samples have zero count.
+
 2014-03-25
 MultiRankSeq 1.2.0: Improved documents; Some bugs were fixed.
 
