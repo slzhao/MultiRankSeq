@@ -1,3 +1,6 @@
+2014-11-06
+MultiRankSeq 1.2.3: Add required versions for DESeq2 and baySeq.
+
 2014-11-05
 MultiRankSeq 1.2.2: Improved to handle different versions of DESeq2 and baySeq.
 
