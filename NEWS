@@ -1,3 +1,9 @@
+2015-08-05
+MultiRankSeq 1.2.5: Compatible with 3.2.1 version of R and related packages.
+
+2015-07-24
+MultiRankSeq 1.2.4: Improved the report. Parameter useAllInHeatmap was added.
+
 2014-11-06
 MultiRankSeq 1.2.3: Add required versions for DESeq2 and baySeq.
 

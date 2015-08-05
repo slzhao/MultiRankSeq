@@ -45,7 +45,7 @@ In MultiRankSeq package, MultiRankSeqReport is the primary function to generate 
 	result1<-MultiRankSeqReport(output="MultiRankSeqReport1.html", rawCounts=countsData, group=group)
 	#Assume the experiment has 4 pairs of normal/disease samples.
 	paired<-c(1:4,1:4)
-	result2<-MultiRankSeqReport(output="MultiRankSeqReport2.html",rawCounts=countsData,group=group,paired=paired
+	result2<-MultiRankSeqReport(output="MultiRankSeqReport2.html",rawCounts=countsData,group=group,paired=paired)
 
 <a name="report"/>
 # Report #

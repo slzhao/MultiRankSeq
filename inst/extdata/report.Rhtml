@@ -29,13 +29,17 @@ cat(temp)
 end.rcode-->
 </div>
 <div><h2 id="M100">Overview</h2>
-<p>Counts (Top 6 rows will be displayed):</p>
+<p>Genes: There are 
+<!--begin.rcode geneNumber,echo=F,results='asis'
+  cat(nrow(rawCounts))
+end.rcode--> 
+genes in the data. The genes in first 6 rows are displayed below:</p>
 <div class="source">
 <!--begin.rcode overview1,echo=F
   head(rawCounts)
 end.rcode-->
 </div>
-<p>Groups (The samples labeled by 0 will be compared with samples labeled by 1):</p>
+<p>Samples: The samples labeled by 0 will be taken as reference and compared with samples labeled by 1:</p>
 <div class="source">
 <!--begin.rcode group,echo=F
   group1<-group
@@ -79,7 +83,11 @@ end.rcode-->
 	groupColor[which(group==1)]<-"steelblue2"
 	
 	nTop<-as.integer(nrow(rawCountsVsd)*percent)  
-	temp<-rawCountsVsd[1:nTop,]
+  if (!useAllInHeatmap) {
+    temp<-rawCountsVsd[1:nTop,]
+  } else {
+    temp<-rawCountsVsd
+  }
 	temp<-temp[which(apply(temp,1,sd)!=0),]
 	heatmap3(temp,cexCol=1,labRow="",margin=c(12,3),Colv=heatmapResultAll$Colv,showRowDendro=F,ColSideLabs="Group",ColSideColors=groupColor,main="All genes",scale="row",balanceColor=T)
 	

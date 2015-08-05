@@ -5,7 +5,7 @@
 \usage{
 MultiRankSeqReport(output = "MultiRankSeq.html", rawCounts, group = c(0, 0,
   0, 1, 1, 1), diffResult, seed = NULL, paired = NULL, exportCounts = F,
-  useVStCount = T, percent = 0.05, ...)
+  useVStCount = T, useAllInHeatmap = F, percent = 0.05, ...)
 }
 \arguments{
 \item{output}{the path and name for report file.}
@@ -22,7 +22,9 @@ MultiRankSeqReport(output = "MultiRankSeq.html", rawCounts, group = c(0, 0,
 
 \item{exportCounts}{Logical. Indicate if the raw counts will be exported in result table.}
 
-\item{useVStCount}{Logical.The DESeq2 package can apply a variance stabilizing transformation (VST) to count data, which can be used in checking outliers or clustering. This parameter indicates if the transformed counts will be used in heatmap, boxplot, and correlation in reports.}
+\item{useVStCount}{Logical. The DESeq2 package can apply a variance stabilizing transformation (VST) to count data, which can be used in checking outliers or clustering. This parameter indicates if the transformed counts will be used in heatmap, boxplot, and correlation in reports.}
+
+\item{useAllInHeatmap}{Logical.}
 
 \item{percent}{The percent of genes with highest SD, to be used in heatmap.}
 
