@@ -1,8 +1,8 @@
 Package: MultiRankSeq
 Type: Package
 Title: MultiRankSeq
-Version: 1.2.5
-Date: 2015-08-05
+Version: 1.2.6
+Date: 2016-04-19
 Author: Shilin Zhao, Yan Guo, Shyr Yu
 Maintainer: Shilin Zhao <shilin.zhao@vanderbilt.edu>
 Description: MultiRankSeq package provides a rank sum approach using multiple
@@ -16,3 +16,5 @@ Depends:
     baySeq (>= 1.18.0),
     VennDiagram,
     knitr
+Collate:
+    'MultiRankSeqFunctions.R'

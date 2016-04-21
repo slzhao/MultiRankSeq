@@ -41,7 +41,7 @@ NULL
 ##' \dontrun{
 ##' #An example: from counts data to report, paired data
 ##' #this code may take two minutes, because performing baySeq, DESeq2, and edgeR may be slow. 
-##' result<-MultiRankSeqReport(output="MultiRankSeq2.html",rawCounts=exampleCounts,group=c(0,0,0,1,1,1),paired=c(1:3,1:3)
+##' result<-MultiRankSeqReport(output="MultiRankSeq2.html",rawCounts=exampleCounts,group=c(0,0,0,1,1,1),paired=c(1:3,1:3))
 ##' }
 MultiRankSeqReport<-function(output="MultiRankSeq.html",rawCounts,group=c(0,0,0,1,1,1),diffResult,seed=NULL,paired=NULL,exportCounts=F,useVStCount=T,useAllInHeatmap=F,percent=0.05,...) {
 	rawCounts<-rawCounts[which(rowSums(rawCounts)>0),]
@@ -171,12 +171,15 @@ mybayseq2<-function(count, group,paired=NULL){
 		}
 		pairGroup<-sapply(unique(paired),function(x) which(paired==x))
 		conds <- list(NDE = rep(1, (length(group)/2)))
-		pairCD<-new("pairedData", data = as.matrix(count[,pairGroup[1,]]), pairData = as.matrix(count[,pairGroup[2,]]), replicates = rep(1, (length(group)/2)), groups = conds)
+		pairCD<-new("countData", 
+				data = array(c(count[,pairGroup[1,]],count[,pairGroup[2,]]),dim = c(nrow(count), ncol(pairGroup), 2)),
+				replicates = rep(1, (length(group)/2)), 
+				groups = conds,
+				densityFunction = bbDensity)
 		libsizes(pairCD) <- getLibsizes(pairCD)
-		pairCD <- getPriors.BB(pairCD, samplesize = 1000, cl = cl)
-		pairCD <- getLikelihoods.BB(pairCD, pET = 'BIC', nullProps = 0.5, cl = cl)
-		bayseq<-topCounts(pairCD, group = "NDE", 
-				number=dim(count)[1] )[,-c(1:(ncol(pairGroup)+1) )]
+		pairCD <- getPriors(pairCD, samplesize = 1000, cl = cl)
+		pairCD <- getLikelihoods(pairCD, pET = 'BIC', nullData = TRUE,cl = cl)
+		bayseq<-topCounts(pairCD, group = 1,number=Inf)
 		bayseq<- bayseq[,c("Likelihood","FDR.NDE")]
 	}
 #	colnames(bayseq)<-c("Likelihood", "AdjLikelihood")
