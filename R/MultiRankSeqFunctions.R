@@ -180,7 +180,14 @@ mybayseq2<-function(count, group,paired=NULL){
 		pairCD <- getPriors(pairCD, samplesize = 1000, cl = cl)
 		pairCD <- getLikelihoods(pairCD, pET = 'BIC', nullData = TRUE,cl = cl)
 		bayseq<-topCounts(pairCD, group = 1,number=Inf)
-		bayseq<- bayseq[,c("Likelihood","FDR.NDE")]
+		row.names(bayseq)<-row.names(count)[bayseq$rowID]
+		if ("FDR.DE" %in% colnames(bayseq)) {
+			bayseq<- bayseq[,c("Likelihood","FDR.DE")]
+		} else if ("FDR" %in% colnames(bayseq)) {
+			bayseq<- bayseq[,c("Likelihood","FDR")]
+		} else {
+			bayseq<- bayseq[,c((ncol(bayseq)-1):ncol(bayseq))]
+		}
 	}
 #	colnames(bayseq)<-c("Likelihood", "AdjLikelihood")
 	return(bayseq)
