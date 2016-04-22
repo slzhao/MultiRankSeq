@@ -181,15 +181,19 @@ mybayseq2<-function(count, group,paired=NULL){
 		pairCD <- getLikelihoods(pairCD, pET = 'BIC', nullData = TRUE,cl = cl)
 		bayseq<-topCounts(pairCD, group = 1,number=Inf)
 		row.names(bayseq)<-row.names(count)[bayseq$rowID]
-		if ("FDR.DE" %in% colnames(bayseq)) {
-			bayseq<- bayseq[,c("Likelihood","FDR.DE")]
+		if ("FDR.NDE" %in% colnames(bayseq)) {
+			bayseq<- bayseq[,c("Likelihood","FDR.NDE")]
 		} else if ("FDR" %in% colnames(bayseq)) {
 			bayseq<- bayseq[,c("Likelihood","FDR")]
 		} else {
-			bayseq<- bayseq[,c((ncol(bayseq)-1):ncol(bayseq))]
+			bayseq<- bayseq[,c("Likelihood",colnames(bayseq)[ncol(bayseq)])]
 		}
 	}
 #	colnames(bayseq)<-c("Likelihood", "AdjLikelihood")
+	if(colnames(bayseq)[1]=="Likelihood") {
+		bayseq[,1]<-1-bayseq[,1]
+		colnames(bayseq)[1]<-"OneMinusLikelihood"
+	}
 	return(bayseq)
 }
 
@@ -245,7 +249,7 @@ combined_result2<-function(DESeq,edgeR,bayseq,rawCount,comparGroups=c(0,0,0,1,1,
 	} else {
 		DESeqResultIndex<-c(2,4,5)
 	}
-	compar1Result<-cbind(DESeq[temp,DESeqResultIndex],edgeR[temp,c(1,4,5)],rawLogFold=temp1,OneMLikelihood=(1-bayseq[temp,1]),AdjLikelihood=bayseq[temp,2])
+	compar1Result<-cbind(DESeq[temp,DESeqResultIndex],edgeR[temp,c(1,4,5)],rawLogFold=temp1,bayseq[temp,])
 	rankCompar1Result1<-apply(apply(compar1Result[,c(2,5,8)],2,rank),1,sum)
 	if (rankMethod1==1) {
 		result<-cbind(compar1Result,apply(compar1Result[,c(2,5,8)],2,rank),rankMethod1=rankCompar1Result1)
