@@ -8,12 +8,14 @@ MultiRankSeq
 * [Reproduce the report](#reproduce)
 
 <a name="Introduction"/>
+
 # Introduction #
 
 RNAseq technology is rapidly replacing microarray technology as the tool of choice for gene expression profiling. While providing more quantitative information than microarray, the analysis of RNAseq has been particularly difficult compare to microarray analysis. To date, many RNAseq analysis packages have been developed, and many evaluation studies have been performed on these packages.  Not surprisingly, different evaluation study produced different opinion on which packages is the most ideal.  We found that often using different package will generate complete different results.  To solve this solve this dilemma, we propose a rank sum approach using multiple RNAseq analysis package (MultiRankSeq) to combine the results from multiple RNAseq package analysis. In addition to differential expression analysis, MultiRankSeq also performs quality control and give detailed graphical post analysis report.    
 
 <a name="download"/>
-# Download and install #
+
+# Download and install
 
 You can install MultiRankSeq package in R from [github](https://github.com/slzhao/MultiRankSeq/) by following codes:
 
@@ -22,7 +24,8 @@ You can install MultiRankSeq package in R from [github](https://github.com/slzha
 	install_github("slzhao/MultiRankSeq")
 
 <a name="example"/>
-# Example #
+
+# Example
 
 After you have installed MultiRankSeq package. You can enter R and use following R codes to see the examples for it.
 	
@@ -52,7 +55,8 @@ In MultiRankSeq package, MultiRankSeqReport is the primary function to generate 
 	result2<-MultiRankSeqReport(output="MultiRankSeqReport2.html",rawCounts=countsData,group=group,paired=paired)
 
 <a name="report"/>
-# Report #
+
+# Report
 
 The MultiRankSeq report contains four parts. The "Command" part records the command to generate the report. So that the user can reproduce the report easily. The "Overview" part displays the raw counts data and groups for samples. The "Distribution" part displays the hierarchical clustering results for samples, by all genes, genes with top 5% SD and genes with top 5% CV. And it also shows boxplot and correlations between samples. The "Difference" displays the results of differential analysis, including the integrated results from three methods, volcano plot and venn plot.
 
@@ -79,7 +83,8 @@ Here are two example reports based on the TCGA data, which were used in our pape
 	TCGA-BH-A0DK-TP
 	
 <a name="reproduce"/>
-# Reproduce the report #
+
+# Reproduce the report
 
 First you will need to download the count data. We generate the count data based on the TCGA samples listed before. You can use the following codes in Linux system to download the count data. Or you can download it in [github release page](https://github.com/slzhao/MultiRankSeq/releases/tag/exampleData).
 

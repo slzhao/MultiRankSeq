@@ -201,10 +201,10 @@ mybayseq2<-function(count, group,paired=NULL){
 		  bayseq<- bayseq[,c(1,ncol(bayseq))]
 		}
 	}
-#	if(colnames(bayseq)[1]=="Likelihood") {
-#		bayseq[,1]<-1-bayseq[,1]
-#		colnames(bayseq)[1]<-"OneMinusLikelihood"
-#	}
+	if(colnames(bayseq)[1]=="likes") {
+		bayseq[,1]<-1-bayseq[,1]
+		colnames(bayseq)[1]<-"OneMinusLikelihood"
+	}
 	return(bayseq)
 }
 
@@ -279,7 +279,7 @@ combined_result2<-function(DESeq,edgeR,bayseq,rawCount,comparGroups=c(0,0,0,1,1,
 	}
 	colnames(result)[1:12]<-c("log2FoldChange(DESeq2)","pValue(DESeq2)","pAdj(DESeq2)",
 	                          "log2FoldChange(edgeR)","pValue(edgeR)","pAdj(edgeR)",
-	                          "log2FoldChange(raw)","posteriorLikelihoods(baySeq)","pAdj(baySeq)",
+	                          "log2FoldChange(raw)","OneMinusLikelihood(baySeq)","pAdj(baySeq)",
 	                          "rank(DESeq)","rank(edgeR)","rank(baySeq)")
 	return(result)
 }
