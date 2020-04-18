@@ -77,6 +77,9 @@ MultiRankSeqReport<-function(output="MultiRankSeq.html",rawCounts,group=c(0,0,0,
 ##' exampleCountsDiff<-findDiff(exampleCounts) #find diff result
 findDiff<-function(rawCounts,group=c(rep(0,ncol(rawCounts)/2),rep(1,ncol(rawCounts)/2)),seed=NULL,paired=NULL) {
 	rawCounts<-rawCounts[which(rowSums(rawCounts)>0),]
+	if (is.null(row.names(rawCounts))) {
+	  row.names(rawCounts)=1:nrow(rawCounts)
+	}
 	comparDESeq<-myDESeq2(rawCounts,group,paired)
 	comparEdgeR<-myedgeR2(as.matrix(rawCounts),group,paired)
 	if (!is.null(seed)) {
@@ -143,7 +146,8 @@ mybayseq2<-function(count, group,paired=NULL){
 	cl <- NULL
 	if (is.null(paired)) {
 		conds <- list(NDE = rep(1, length(group)), DE = group)
-		CD<-new("countData", data = count, replicates = group, groups = conds)
+		CD<-new("countData", data = count, replicates = group, groups = conds,
+		        annotation=as.data.frame(row.names(count)))
 #		CD@libsizes <- getLibsizes(CD, estimationType="quantile")
 		libsizes(CD)<- getLibsizes(CD, estimationType="quantile")
 		CDP.NBML <- getPriors.NB(CD, samplesize = 1000, 
@@ -151,13 +155,13 @@ mybayseq2<-function(count, group,paired=NULL){
 #		CDPost.NBML <- getLikelihoods.NB(CDP.NBML, pET = 'BIC', cl = cl)
 		CDPost.NBML <- getLikelihoods(CDP.NBML, pET = 'BIC', cl = cl)
 		bayseq<-topCounts(CDPost.NBML, group = "DE", 
-				number=dim(count)[1] )[,-c(1:(dim(count)[2]+1) )]
+				number=dim(count)[1] )[,-c(1:(dim(count)[2]))]
 		if ("FDR.DE" %in% colnames(bayseq)) {
-			bayseq<- bayseq[,c("Likelihood","FDR.DE")]
+			bayseq<- bayseq[,c("likes","FDR.DE")]
 		} else if ("FDR" %in% colnames(bayseq)) {
-			bayseq<- bayseq[,c("Likelihood","FDR")]
+			bayseq<- bayseq[,c("likes","FDR")]
 		} else {
-			bayseq<- bayseq[,c((ncol(bayseq)-1):ncol(bayseq))]
+			bayseq<- bayseq[,c(1,ncol(bayseq))]
 		}
 	} else { #paired data
 		if (length(which(group==0))*2!=length(group)) {
@@ -175,25 +179,32 @@ mybayseq2<-function(count, group,paired=NULL){
 				data = array(c(count[,pairGroup[1,]],count[,pairGroup[2,]]),dim = c(nrow(count), ncol(pairGroup), 2)),
 				replicates = rep(1, (length(group)/2)), 
 				groups = conds,
-				densityFunction = bbDensity)
+				densityFunction = bbDensity,
+				annotation=as.data.frame(row.names(count)))
 		libsizes(pairCD) <- getLibsizes(pairCD)
 		pairCD <- getPriors(pairCD, samplesize = 1000, cl = cl)
 		pairCD <- getLikelihoods(pairCD, pET = 'BIC', nullData = TRUE,cl = cl)
-		bayseq<-topCounts(pairCD, group = 1,number=Inf)
-		row.names(bayseq)<-row.names(count)[bayseq$rowID]
+		bayseq<-topCounts(pairCD, group = 1,number=Inf)[,-c(1:(dim(pairGroup)[2]+1))]
+#		row.names(bayseq)<-row.names(count)[bayseq$row.names.count.]
+		# if ("FDR.NDE" %in% colnames(bayseq)) {
+		# 	bayseq<- bayseq[,c("Likelihood","FDR.NDE")]
+		# } else if ("FDR" %in% colnames(bayseq)) {
+		# 	bayseq<- bayseq[,c("Likelihood","FDR")]
+		# } else {
+		# 	bayseq<- bayseq[,c("Likelihood",colnames(bayseq)[ncol(bayseq)])]
+		# }
 		if ("FDR.NDE" %in% colnames(bayseq)) {
-			bayseq<- bayseq[,c("Likelihood","FDR.NDE")]
+		  bayseq<- bayseq[,c("likes","FDR.NDE")]
 		} else if ("FDR" %in% colnames(bayseq)) {
-			bayseq<- bayseq[,c("Likelihood","FDR")]
+		  bayseq<- bayseq[,c("likes","FDR")]
 		} else {
-			bayseq<- bayseq[,c("Likelihood",colnames(bayseq)[ncol(bayseq)])]
+		  bayseq<- bayseq[,c(1,ncol(bayseq))]
 		}
 	}
-#	colnames(bayseq)<-c("Likelihood", "AdjLikelihood")
-	if(colnames(bayseq)[1]=="Likelihood") {
-		bayseq[,1]<-1-bayseq[,1]
-		colnames(bayseq)[1]<-"OneMinusLikelihood"
-	}
+#	if(colnames(bayseq)[1]=="Likelihood") {
+#		bayseq[,1]<-1-bayseq[,1]
+#		colnames(bayseq)[1]<-"OneMinusLikelihood"
+#	}
 	return(bayseq)
 }
 
@@ -266,7 +277,10 @@ combined_result2<-function(DESeq,edgeR,bayseq,rawCount,comparGroups=c(0,0,0,1,1,
 		names(rankCompar1Result2)<-row.names(compar1Result)
 		result<-cbind(compar1Result,temp,rankMethod2=rankCompar1Result2)
 	}
-	colnames(result)[1:12]<-c("log2FoldChange(DESeq2)","pValue(DESeq2)","pAdj(DESeq2)","log2FoldChange(edgeR)","pValue(edgeR)","pAdj(edgeR)","log2FoldChange(raw)","1-Likelihood(baySeq)","AdjLikelihood(baySeq)","rank(DESeq)","rank(edgeR)","rank(baySeq)")
+	colnames(result)[1:12]<-c("log2FoldChange(DESeq2)","pValue(DESeq2)","pAdj(DESeq2)",
+	                          "log2FoldChange(edgeR)","pValue(edgeR)","pAdj(edgeR)",
+	                          "log2FoldChange(raw)","posteriorLikelihoods(baySeq)","pAdj(baySeq)",
+	                          "rank(DESeq)","rank(edgeR)","rank(baySeq)")
 	return(result)
 }
 

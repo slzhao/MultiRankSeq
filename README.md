@@ -9,10 +9,12 @@ MultiRankSeq
 
 <a name="Introduction"/>
 # Introduction #
+
 RNAseq technology is rapidly replacing microarray technology as the tool of choice for gene expression profiling. While providing more quantitative information than microarray, the analysis of RNAseq has been particularly difficult compare to microarray analysis. To date, many RNAseq analysis packages have been developed, and many evaluation studies have been performed on these packages.  Not surprisingly, different evaluation study produced different opinion on which packages is the most ideal.  We found that often using different package will generate complete different results.  To solve this solve this dilemma, we propose a rank sum approach using multiple RNAseq analysis package (MultiRankSeq) to combine the results from multiple RNAseq package analysis. In addition to differential expression analysis, MultiRankSeq also performs quality control and give detailed graphical post analysis report.    
 
 <a name="download"/>
 # Download and install #
+
 You can install MultiRankSeq package in R from [github](https://github.com/slzhao/MultiRankSeq/) by following codes:
 
 	install.packages("devtools") #If you havn't installed devtools package, install it first
@@ -21,6 +23,7 @@ You can install MultiRankSeq package in R from [github](https://github.com/slzha
 
 <a name="example"/>
 # Example #
+
 After you have installed MultiRankSeq package. You can enter R and use following R codes to see the examples for it.
 	
 	#Load MultiRankSeq package
@@ -31,7 +34,7 @@ After you have installed MultiRankSeq package. You can enter R and use following
 	example(MultiRankSeqReport)
 
 <a name="usage"/>
-# Usage #
+# Usage
 
 In MultiRankSeq package, MultiRankSeqReport is the primary function to generate MultiRankSeq report based on counts data.
 
