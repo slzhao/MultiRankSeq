@@ -34,6 +34,7 @@ After you have installed MultiRankSeq package. You can enter R and use following
 	example(MultiRankSeqReport)
 
 <a name="usage"/>
+
 # Usage
 
 In MultiRankSeq package, MultiRankSeqReport is the primary function to generate MultiRankSeq report based on counts data.
