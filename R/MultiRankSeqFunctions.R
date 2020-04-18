@@ -80,6 +80,9 @@ findDiff<-function(rawCounts,group=c(rep(0,ncol(rawCounts)/2),rep(1,ncol(rawCoun
 	if (is.null(row.names(rawCounts))) {
 	  row.names(rawCounts)=1:nrow(rawCounts)
 	}
+	if (is.null(colnames(rawCounts))) {
+	  colnames(rawCounts)=1:ncol(rawCounts)
+	}
 	comparDESeq<-myDESeq2(rawCounts,group,paired)
 	comparEdgeR<-myedgeR2(as.matrix(rawCounts),group,paired)
 	if (!is.null(seed)) {
@@ -155,13 +158,15 @@ mybayseq2<-function(count, group,paired=NULL){
 #		CDPost.NBML <- getLikelihoods.NB(CDP.NBML, pET = 'BIC', cl = cl)
 		CDPost.NBML <- getLikelihoods(CDP.NBML, pET = 'BIC', cl = cl)
 		bayseq<-topCounts(CDPost.NBML, group = "DE", 
-				number=dim(count)[1] )[,-c(1:(dim(count)[2]))]
+				number=dim(count)[1] )
+		row.names(bayseq)=bayseq$row.names.count.
+#		bayseq=bayseq[,-c(1:(dim(count)[2]+1))]
 		if ("FDR.DE" %in% colnames(bayseq)) {
 			bayseq<- bayseq[,c("likes","FDR.DE")]
 		} else if ("FDR" %in% colnames(bayseq)) {
 			bayseq<- bayseq[,c("likes","FDR")]
 		} else {
-			bayseq<- bayseq[,c(1,ncol(bayseq))]
+			bayseq<- bayseq[,-c(1:(dim(count)[2]+1))][,c(1,ncol(bayseq))]
 		}
 	} else { #paired data
 		if (length(which(group==0))*2!=length(group)) {
@@ -184,7 +189,7 @@ mybayseq2<-function(count, group,paired=NULL){
 		libsizes(pairCD) <- getLibsizes(pairCD)
 		pairCD <- getPriors(pairCD, samplesize = 1000, cl = cl)
 		pairCD <- getLikelihoods(pairCD, pET = 'BIC', nullData = TRUE,cl = cl)
-		bayseq<-topCounts(pairCD, group = 1,number=Inf)[,-c(1:(dim(pairGroup)[2]+1))]
+		bayseq<-topCounts(pairCD, group = 1,number=Inf)
 #		row.names(bayseq)<-row.names(count)[bayseq$row.names.count.]
 		# if ("FDR.NDE" %in% colnames(bayseq)) {
 		# 	bayseq<- bayseq[,c("Likelihood","FDR.NDE")]
@@ -193,12 +198,13 @@ mybayseq2<-function(count, group,paired=NULL){
 		# } else {
 		# 	bayseq<- bayseq[,c("Likelihood",colnames(bayseq)[ncol(bayseq)])]
 		# }
+		row.names(bayseq)=bayseq$row.names.count.
 		if ("FDR.NDE" %in% colnames(bayseq)) {
 		  bayseq<- bayseq[,c("likes","FDR.NDE")]
 		} else if ("FDR" %in% colnames(bayseq)) {
 		  bayseq<- bayseq[,c("likes","FDR")]
 		} else {
-		  bayseq<- bayseq[,c(1,ncol(bayseq))]
+		  bayseq<- bayseq[,-c(1:(dim(pairGroup)[2]+1))][,c(1,ncol(bayseq))]
 		}
 	}
 	if(colnames(bayseq)[1]=="likes") {
